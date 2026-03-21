@@ -1,12 +1,7 @@
-ent-BaseCrowbar = монтировка
-    .desc = Многофункциональный инструмент для различных задач, таких как открывание дверей или борьба с межпространственными захватчиками.
-ent-Crowbar = { ent-BaseCrowbar }
+ent-CrowbarGreen = зелёная монтировка
     .desc = { ent-BaseCrowbar.desc }
-ent-CrowbarRed = аварийная монтировка
+ent-CrowbarYellow = жёлтая монтировка
     .desc = { ent-BaseCrowbar.desc }
-ent-CrowbarGreen = { ent-BaseCrowbar }
+ent-CrowbarOrange = оранжевая монтировка
     .desc = { ent-BaseCrowbar.desc }
-ent-CrowbarOrange = { ent-BaseCrowbar }
-    .desc = { ent-BaseCrowbar.desc }
-ent-CrowbarYellow = { ent-BaseCrowbar }
-    .desc = { ent-BaseCrowbar.desc }
+ent-CrowbarPocket = карманная монтировка

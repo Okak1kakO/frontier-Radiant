@@ -1,8 +1,4 @@
-ent-BaseControllable = { "" }
-    .desc = { "" }
 ent-BaseMob = { "" }
-    .desc = { "" }
-ent-MobPolymorphable = { "" }
     .desc = { "" }
 ent-MobDamageable = { "" }
     .desc = { "" }

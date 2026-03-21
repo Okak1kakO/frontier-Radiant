@@ -1,6 +1,10 @@
 ent-BaseMagazineBoxCaselessRifle = коробка патронов (.25 безгильзовые)
     .desc = { ent-BaseItem.desc }
+ent-MagazineBoxCaselessRifle10x24 = ящик патронов (.25 безгильзовые)
+    .desc = { ent-BaseMagazineBoxCaselessRifle.desc }
+ent-MagazineBoxCaselessRifleBig = ящик патронов (.25 безгильзовые)
+    .desc = { ent-BaseMagazineBoxCaselessRifle.desc }
 ent-MagazineBoxCaselessRifle = коробка патронов (.25 безгильзовые)
-    .desc = Картонная коробка с безгильзовыми патронами .25 калибра. Предназначена для хранения кинетических боеприпасов общего назначения.
+    .desc = { ent-BaseMagazineBoxCaselessRifle.desc }
 ent-MagazineBoxCaselessRiflePractice = коробка патронов (.25 безгильзовые учебные)
-    .desc = Картонная коробка с безгильзовыми патронами .25 калибра. Предназначена для хранения безвредных меловых боеприпасов.
+    .desc = { ent-BaseMagazineBoxCaselessRifle.desc }

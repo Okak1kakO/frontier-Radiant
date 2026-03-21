@@ -2,6 +2,7 @@ anomaly-component-contact-damage = Аномалия сдирает с вас к�
 anomaly-vessel-component-anomaly-assigned = Аномалия присвоена сосуду.
 anomaly-vessel-component-not-assigned = Этому сосуду не присвоена ни одна аномалия. Попробуйте использовать на нём сканер.
 anomaly-vessel-component-assigned = Этому сосуду уже присвоена аномалия.
+anomaly-vessel-component-upgrade-output = исходящие ОИ
 anomaly-particles-delta = Дельта-частицы
 anomaly-particles-epsilon = Эпсилон-частицы
 anomaly-particles-zeta = Зета-частицы
@@ -53,8 +54,6 @@ anomaly-sync-examine-connected = Он [color=darkgreen]присоединён[/c
 anomaly-sync-examine-not-connected = Он [color=darkred]не присоединён[/color] к аномалии.
 anomaly-sync-connect-verb-text = Присоединить аномалию
 anomaly-sync-connect-verb-message = Присоединить близлежащую аномалию к { $machine }.
-anomaly-sync-disconnect-verb-text = Отсоединить аномалию
-anomaly-sync-disconnect-verb-message = Отсоединить подключённую аномалию от { $machine }.
 anomaly-generator-ui-title = генератор аномалий
 anomaly-generator-fuel-display = Топливо:
 anomaly-generator-cooldown = Перезарядка: [color=gray]{ $time }[/color]

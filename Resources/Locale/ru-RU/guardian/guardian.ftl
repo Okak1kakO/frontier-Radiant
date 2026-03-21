@@ -5,10 +5,9 @@ guardian-already-present-invalid-creation = Вы НЕ переживёте за�
 guardian-no-actions-invalid-creation = У вас нет возможности содержать в себе стража!
 guardian-activator-empty-invalid-creation = Инъектор израсходован.
 guardian-activator-empty-examine = [color=#ba1919]Инъектор израсходован.[/color].
-guardian-activator-invalid-target = { CAPITALIZE($entity) } не может быть имплантирован!
+guardian-activator-invalid-target = Только гуманоиды подходят для инъекции!
 guardian-no-soul = У вашего стража нет души.
 guardian-available = У вашего стража теперь есть душа.
-guardian-inside-container = Здесь не хватает места, чтобы высвободить стража!
 
 ## Guardian entity specific
 

@@ -9,8 +9,7 @@ replay-loading-starting = Запуск сущностей
 replay-loading-failed =
     Не удалось загрузить повтор. Ошибка:
     { $reason }
-replay-loading-retry = Попробовать загрузить с большей допустимостью исключений — МОЖЕТ ВЫЗВАТЬ БАГИ!
-replay-loading-cancel = Отмена
+replay-loading-retry = Попробовать загрузить с большей допустимостью исключений - МОЖЕТ ВЫЗВАТЬ БАГИ!
 # Main Menu
 replay-menu-subtext = Повторы
 replay-menu-load = Загрузить выбранный повтор
@@ -27,8 +26,8 @@ replay-info-info =
     { "[" }color=gray]ID раунда:[/color]   { $roundId }
     { "[" }color=gray]Продолжительность:[/color]   { $duration }
     { "[" }color=gray]ForkId:[/color]   { $forkId }
-    { "[" }color=gray]Версия:[/color]   { $version }
-    { "[" }color=gray]Движок:[/color]   { $engVersion }
+    { "[" }color=gray]Version:[/color]   { $version }
+    { "[" }color=gray]Engine:[/color]   { $engVersion }
     { "[" }color=gray]Type Hash:[/color]   { $hash }
     { "[" }color=gray]Comp Hash:[/color]   { $compHash }
 # Replay selection window
@@ -39,4 +38,4 @@ replay-verb-spectate = Наблюдать
 cmd-replay-spectate-help = replay_spectate [сущность (опционально)]
 cmd-replay-spectate-desc = Прикрепляет или открепляет локального игрока к заданному uid сущности.
 cmd-replay-spectate-hint = Опциональный EntityUid
-cmd-replay-toggleui-desc = Переключение пользовательского интерфейса управления воспроизведением.
+cmd-replay-toggleui-desc = Toggles the replay control UI.

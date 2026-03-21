@@ -3,8 +3,8 @@ job-name-security = офицер СБ
 job-name-cadet = кадет СБ
 job-name-hos = глава службы безопасности
 job-name-detective = детектив
-job-name-brigmedic = бригмедик
 job-name-borg = киборг
+job-name-borg-security = киборг службы безопасности
 job-name-scientist = учёный
 job-name-research-assistant = научный ассистент
 job-name-rd = научный руководитель
@@ -21,8 +21,6 @@ job-name-hop = глава персонала
 job-name-captain = капитан
 job-name-serviceworker = сервисный работник
 job-name-centcomoff = представитель Центком
-job-name-cburn = агент карантинной службы Центком
-job-name-deathsquad = агент Центком
 job-name-reporter = репортёр
 job-name-musician = музыкант
 job-name-librarian = библиотекарь
@@ -35,7 +33,6 @@ job-name-botanist = ботаник
 job-name-bartender = бармен
 job-name-passenger = пассажир
 job-name-salvagespec = утилизатор
-job-name-station-ai = станционный ИИ
 job-name-qm = квартирмейстер
 job-name-cargotech = грузчик
 job-name-chef = шеф-повар
@@ -46,23 +43,9 @@ job-name-ertengineer = инженер ОБР
 job-name-ertsecurity = офицер безопасности ОБР
 job-name-ertmedic = медик ОБР
 job-name-ertjanitor = уборщик ОБР
+job-name-boxer = боксёр
+job-name-zookeeper = зоотехник
 job-name-visitor = посетитель
-job-name-cluwne = клувень
-# unused jobs
-# these are required for the agent ID job icon tooltips
-# I am keeping them for roleplaying opportunities
-job-name-geneticist = генетик
-job-name-no-id = нет ID
-job-name-prisoner = заключённый
-job-name-roboticist = робототехник
-job-name-syndicate = синдикат
-job-name-unknown = неизвестно
-job-name-virologist = вирусолог
-job-name-zombie = зомби
-# Job titles
-job-title-visitor = посетитель
-job-title-cluwne = клувень
-job-title-universal = универсальная
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = атмосферный техник
 JobBartender = бармен
@@ -78,9 +61,9 @@ JobChiefEngineer = старший инженер
 JobChiefMedicalOfficer = главный врач
 JobClown = клоун
 JobDetective = детектив
+JobERTEngineer = инженер ОБР
 JobBrigmedic = бригмедик
 JobERTChaplain = священник ОБР
-JobERTEngineer = инженер ОБР
 JobERTJanitor = уборщик ОБР
 JobERTLeader = лидер ОБР
 JobERTMedical = медик ОБР
@@ -94,20 +77,62 @@ JobMedicalDoctor = врач
 JobMedicalIntern = интерн
 JobMime = мим
 JobMusician = музыкант
-JobParamedic = парамедик
 JobPassenger = пассажир
+JobParamedic = парамедик
 JobPsychologist = психолог
 JobQuartermaster = квартирмейстер
 JobReporter = репортёр
-JobResearchAssistant = научный ассистент
 JobResearchDirector = научный руководитель
+JobResearchAssistant = научный ассистент
 JobSalvageSpecialist = утилизатор
 JobScientist = учёный
 JobSecurityCadet = кадет СБ
 JobSecurityOfficer = офицер СБ
 JobServiceWorker = сервисный работник
-JobStationAi = станционный ИИ
 JobStationEngineer = инженер
 JobTechnicalAssistant = технический ассистент
-JobVisitor = посетитель
 JobWarden = смотритель
+JobVisitor = посетитель
+JobBoxer = боксёр
+JobZookeeper = зоотехник
+
+# typan-
+job-name-typan-researcher = Оперативник Нордфолла
+job-name-typan-atmos-tech = Военный Инженер Нордфолла
+job-name-typan-botanist = Ботаник Синдиката
+job-name-typan-cargotech = Взводный Сержант Нордфолла
+job-name-typan-chef = Сервисный Работник Нордфолла
+job-name-typan-medic = Полевой Медик Нордфолла
+job-name-typan-rd = Директор Боевых Операций
+job-name-typan-science = Научный Сотрудник Нордфолла
+job-name-typan-telecommunications-officer = Офицер телекомуникаций Нордфолла
+
+job-name-outpost-syndicate-shareholder = Акционер Синдиката
+
+# luatech
+job-name-ops-luatech = Оперативник Lua Technologies
+JobOpsLuaTech = Оперативник Lua Technologies
+
+# Typan
+JobTypanAtmosTech = Военный Инженер Нордфолла
+JobTypanBotanist = Ботаник Синдиката
+JobTypanCargotech = Взводный Сержант Нордфолла
+JobTypanChef = Сервисный Работник Нордфолла
+JobTypanMedic = Полевой Медик Нордфолла
+JobTypanRD = Директор Боевых Операций
+JobTypanScience = Научный Сотрудник Нордфолла
+JobTypanTelecommunicationsOfficer = Офицер телекомуникаций Нордфолла
+
+JobOutpostSyndicateShareholder = Акционер Синдиката
+
+# CentComm
+
+
+job-name-centcom-officer = Офицер ЦК
+
+JobCentralCommandOfficer = Офицер ЦК
+
+job-name-fsfcommander-bravo = Командир Рейнджеров Браво
+job-name-fsfspecialist-bravo = Специалист Рейнджеров Браво
+job-name-fsfcommander-charlie = Командир Рейнджеров Чарли
+job-name-fsfspecialist-charlie = Специалист Рейнджеров Чарли

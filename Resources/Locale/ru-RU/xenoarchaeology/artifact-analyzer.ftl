@@ -2,9 +2,8 @@ analysis-console-menu-title = Аналитическая консоль широ
 analysis-console-server-list-button = Сервер
 analysis-console-extract-button = Извлечь очки
 analysis-console-info-no-scanner = Анализатор не подключён! Пожалуйста, подключите его с помощью мультитула.
-analysis-console-info-no-artifact =
-    Артефакт не найден!
-    Поместите артефакт на платформу  для получения данных о узлах.
+analysis-console-info-no-artifact = Артефакт не найден!
+        Поместите артефакт на платформу  для получения данных о узлах.
 analysis-console-info-ready = Все системы запущены. Сканирование готово.
 analysis-console-no-node = Выберите узел для просмотра
 analysis-console-info-id = [font="Monospace" size=11]ID:[/font]
@@ -38,3 +37,10 @@ analysis-console-extract-value = [font="Monospace" size=11][color=orange]Узе�
 analysis-console-extract-none = [font="Monospace" size=11][color=orange] У разблокированых узлов не осталось очков для извлечения [/color][/font]
 analysis-console-extract-sum = [font="Monospace" size=11][color=orange]Всего изучено: { $value }[/color][/font]
 analyzer-artifact-extract-popup = Поверхность артефакта мерцает энергией!
+
+analysis-console-info-durability-triggered = [font="Monospace" size=11][color={ $current ->
+       *[2] lightpink]Не активирован
+        [0] lightgreen]Активирован
+    }[/color][/font]
+analysis-console-info-effect-unknown = Неизвестно
+

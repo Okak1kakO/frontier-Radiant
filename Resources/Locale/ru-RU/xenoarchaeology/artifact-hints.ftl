@@ -74,3 +74,6 @@ xenoarch-trigger-examine-pulsing = Из поверхности артефакт�
 xenoarch-trigger-examine-timer = Резьбы и царапины покрываю поверхность... Вы едва различаете число: [italic]{ $time }[/italic]
 xenoarch-effect-puddle = Производит лужу из следующих реагентов: { $reagent }
 xenoarch-effect-foam = Производит пену из следующих реагентов: { $reagent }
+artifact-effect-hint-reclaimer = Репродукция материи
+artifact-effect-hint-petting = Взаимная привязанность
+artifact-effect-hint-mop = Поглощение жидкости

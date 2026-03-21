@@ -10,7 +10,7 @@ humanoid-profile-editor-sex-female-text = Женский
 humanoid-profile-editor-sex-unsexed-text = Отсутствует
 humanoid-profile-editor-age-label = Возраст:
 humanoid-profile-editor-skin-color-label = Цвет кожи:
-humanoid-profile-editor-species-label = Вид:
+humanoid-profile-editor-species-label = Раса:
 humanoid-profile-editor-pronouns-label = Личное местоимение:
 humanoid-profile-editor-pronouns-male-text = Он / Его
 humanoid-profile-editor-pronouns-female-text = Она / Её
@@ -26,7 +26,7 @@ humanoid-profile-editor-spawn-priority-label = Приоритет спавна:
 humanoid-profile-editor-eyes-label = Цвет глаз:
 humanoid-profile-editor-jobs-tab = Должности
 humanoid-profile-editor-preference-unavailable-stay-in-lobby-button = Остаться в лобби, если должность недоступна.
-humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button = Получить должность "{ $overflowJob }", если должность недоступна.
+humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button = Получить должность Авантюриста, если должность недоступна.
 humanoid-profile-editor-preference-jumpsuit = Комбинезон
 humanoid-profile-editor-preference-jumpskirt = Юбка-комбинезон
 humanoid-profile-editor-preference-backpack = Рюкзак
@@ -54,4 +54,21 @@ humanoid-profile-editor-no-traits = Нет доступных черт
 humanoid-profile-editor-trait-count-hint = Доступно очков: [{ $current }/{ $max }]
 trait-category-disabilities = Ограничения
 trait-category-speech = Черты речи
-trait-category-quirks = Причуды
+
+# Company
+humanoid-profile-editor-company-tab = Фракции
+humanoid-profile-editor-company-label = Фракция:
+
+# Lua Hair gradient UI
+humanoid-profile-editor-hair-gradient-label = Градиент волос
+humanoid-profile-editor-hair-gradient-enable = Включить градиент
+humanoid-profile-editor-hair-gradient-direction = Направление
+humanoid-profile-editor-hair-gradient-dir-bottom-top = Снизу вверх
+humanoid-profile-editor-hair-gradient-dir-top-bottom = Сверху вниз
+humanoid-profile-editor-hair-gradient-dir-left-right = Слева направо
+humanoid-profile-editor-hair-gradient-dir-right-left = Справа налево
+
+humanoid-profile-editor-facialhair-gradient-label = Градиент бороды
+
+# Lua All markings gradient
+humanoid-profile-editor-allmarkings-gradient-label = Градиент тела и черт

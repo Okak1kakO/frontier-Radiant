@@ -3,24 +3,24 @@ shuttle-pilot-end = Пилотирование прекращено
 shuttle-console-in-ftl = Уже в БСС
 shuttle-console-mass = Слишком большой для БСС
 shuttle-console-prevent = Вы не можете пилотировать этот корабль
+shuttle-console-ftl-magnet-target = Нельзя уйти в БСС, пока магнит удерживает объект, который не является шаттлом.
 
 # NAV
 
 shuttle-console-display-label = Дисплей
 shuttle-console-position = Координаты:
-shuttle-console-position-value = { $X }, { $Y }
 shuttle-console-orientation = Азимут:
-shuttle-console-orientation-value = { $angle }
 shuttle-console-linear-velocity = Линейная скорость:
-shuttle-console-linear-velocity-value = { $X }, { $Y }
 shuttle-console-angular-velocity = Угловая скорость:
-shuttle-console-angular-velocity-value = { $angularVelocity }
 shuttle-console-unknown = Неизвестно
 shuttle-console-iff-label = { $name } ({ $distance } м)
 shuttle-console-exclusion = Зона отчуждения
+# Buttons
+shuttle-console-strafing = Режим стрейфа
 shuttle-console-nav-settings = Настройки
 shuttle-console-iff-toggle = Показ системы опознавания
 shuttle-console-dock-toggle = Показ стыковочных портов
+shuttle-console-iffshuttles-toggle = Показать шаттлы
 
 # MAP
 
@@ -29,7 +29,6 @@ shuttle-console-ftl-state-Available = Доступно
 shuttle-console-ftl-state-Starting = Запуск
 shuttle-console-ftl-state-Travelling = В пути
 shuttle-console-ftl-state-Arriving = Прибытие
-shuttle-console-ftl-state-Invalid = Ошибка
 shuttle-console-ftl-state-Cooldown = Перезарядка
 shuttle-console-map-settings = Настройки
 shuttle-console-ftl-button = БСС
@@ -47,3 +46,8 @@ shuttle-console-dock = Пристыковать
 shuttle-console-docks-label = Стыковочные порты
 shuttle-console-undock-fail = Не удалось отстыковаться
 shuttle-console-dock-fail = Не удалось пристыковаться
+shuttle-console-ftl-lock = БСС Блокировка
+shuttle-console-ftl-lock-enabled = Включено
+shuttle-console-ftl-lock-disabled = Выключено
+
+shipyard-console-no-voucher-allowed = Этот корабль нельзя приобрести по ваучеру

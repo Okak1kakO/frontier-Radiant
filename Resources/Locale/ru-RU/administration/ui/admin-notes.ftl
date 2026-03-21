@@ -56,21 +56,13 @@ admin-note-editor-severity-none = Нет
 admin-note-editor-severity-low = Низкий
 admin-note-editor-severity-medium = Средний
 admin-note-editor-severity-high = Высокий
-admin-note-editor-expiry-checkbox = Перманентно?
-admin-note-editor-expiry-checkbox-tooltip = Уберите флажок, чтобы сделать его истекаемым
+admin-note-editor-expiry-checkbox = Пермаментно?
+admin-note-editor-expiry-checkbox-tooltip = Уберите флажок, что бы сделать его истекаемым
 admin-note-editor-expiry-label = Истекает в:
 admin-note-editor-expiry-label-params = Истекает: { $date } (через { $expiresIn })
 admin-note-editor-expiry-label-expired = Истёк
 admin-note-editor-expiry-placeholder = Укажите срок действия (yyyy-MM-dd HH:mm:ss)
 admin-note-editor-submit = Подтвердить
-# Time
-admin-note-button-minutes = Минут
-admin-note-button-hours = Часов
-admin-note-button-days = Дней
-admin-note-button-weeks = Недель
-admin-note-button-months = Месяцев
-admin-note-button-years = Лет
-admin-note-button-centuries = Веков
 admin-note-editor-submit-confirm = Вы уверены?
 # Watchlist and message login
 admin-notes-watchlist = Наблюдение над { $player }: { $message }
