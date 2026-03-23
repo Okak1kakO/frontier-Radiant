@@ -1,138 +1,126 @@
-job-name-warden = смотритель
-job-name-security = офицер СБ
-job-name-cadet = кадет СБ
-job-name-hos = глава службы безопасности
-job-name-detective = детектив
-job-name-borg = киборг
-job-name-borg-security = киборг службы безопасности
-job-name-scientist = учёный
-job-name-research-assistant = научный ассистент
-job-name-rd = научный руководитель
-job-name-psychologist = психолог
-job-name-intern = интерн
-job-name-doctor = врач
-job-name-paramedic = парамедик
-job-name-cmo = главный врач
-job-name-chemist = химик
-job-name-technical-assistant = технический ассистент
-job-name-engineer = инженер
-job-name-atmostech = атмосферный техник
-job-name-hop = глава персонала
-job-name-captain = капитан
-job-name-serviceworker = сервисный работник
-job-name-centcomoff = представитель Центком
-job-name-reporter = репортёр
-job-name-musician = музыкант
-job-name-librarian = библиотекарь
-job-name-lawyer = адвокат
-job-name-mime = мим
-job-name-ce = старший инженер
-job-name-janitor = уборщик
-job-name-chaplain = священник
-job-name-botanist = ботаник
-job-name-bartender = бармен
-job-name-passenger = пассажир
-job-name-salvagespec = утилизатор
-job-name-qm = квартирмейстер
-job-name-cargotech = грузчик
-job-name-chef = шеф-повар
-job-name-clown = клоун
-job-name-ertleader = лидер ОБР
-job-name-ertchaplain = священник ОБР
-job-name-ertengineer = инженер ОБР
-job-name-ertsecurity = офицер безопасности ОБР
-job-name-ertmedic = медик ОБР
-job-name-ertjanitor = уборщик ОБР
-job-name-boxer = боксёр
-job-name-zookeeper = зоотехник
-job-name-visitor = посетитель
-# Role timers - Make these alphabetical or I cut you
-JobAtmosphericTechnician = атмосферный техник
-JobBartender = бармен
-JobBorg = киборг
-JobBotanist = ботаник
-JobCaptain = капитан
-JobCargoTechnician = грузчик
-JobCentralCommandOfficial = представитель Центком
-JobChaplain = священник
-JobChef = шеф-повар
-JobChemist = химик
-JobChiefEngineer = старший инженер
-JobChiefMedicalOfficer = главный врач
-JobClown = клоун
-JobDetective = детектив
-JobERTEngineer = инженер ОБР
-JobBrigmedic = бригмедик
-JobERTChaplain = священник ОБР
-JobERTJanitor = уборщик ОБР
-JobERTLeader = лидер ОБР
-JobERTMedical = медик ОБР
-JobERTSecurity = офицер безопасности ОБР
-JobHeadOfPersonnel = глава персонала
-JobHeadOfSecurity = глава службы безопасности
-JobJanitor = уборщик
-JobLawyer = адвокат
-JobLibrarian = библиотекарь
-JobMedicalDoctor = врач
-JobMedicalIntern = интерн
-JobMime = мим
-JobMusician = музыкант
-JobPassenger = пассажир
-JobParamedic = парамедик
-JobPsychologist = психолог
-JobQuartermaster = квартирмейстер
-JobReporter = репортёр
-JobResearchDirector = научный руководитель
-JobResearchAssistant = научный ассистент
-JobSalvageSpecialist = утилизатор
-JobScientist = учёный
-JobSecurityCadet = кадет СБ
-JobSecurityOfficer = офицер СБ
-JobServiceWorker = сервисный работник
-JobStationEngineer = инженер
-JobTechnicalAssistant = технический ассистент
-JobWarden = смотритель
-JobVisitor = посетитель
-JobBoxer = боксёр
-JobZookeeper = зоотехник
+job-name-warden = Смотритель
+job-name-security = Офицер безопасности
+job-name-cadet = Кадет безопасности
+job-name-hos = Глава службы безопасности
+job-name-detective = Детектив
+job-name-borg = Киборг
+job-name-scientist = Учёный
+job-name-research-assistant = Лаборант
+job-name-rd = Научный руководитель
+job-name-psychologist = Психолог
+job-name-intern = Интерн медицины
+job-name-doctor = Врач
+job-name-paramedic = Парамедик
+job-name-cmo = Главный врач
+job-name-chemist = Химик
+job-name-technical-assistant = Технический ассистент
+job-name-engineer = Инженер станции
+job-name-atmostech = Атмосферный техник
+job-name-hop = Глава персонала
+job-name-captain = Капитан
+job-name-serviceworker = Работник сферы обслуживания
+job-name-centcomoff = Представитель Центком
+job-name-cburn = Карантинный офицер Центком
+job-name-deathsquad = Агент Центком
+job-name-reporter = Репортёр
+job-name-musician = Музыкант
+job-name-librarian = Библиотекарь
+job-name-lawyer = Адвокат
+job-name-mime = Мим
+job-name-ce = Главный инженер
+job-name-janitor = Уборщик
+job-name-chaplain = Капеллан
+job-name-botanist = Ботаник
+job-name-bartender = Бармен
+job-name-passenger = Пассажир
+job-name-salvagespec = Утилизатор
+job-name-station-ai = Станционный ИИ
+job-name-qm = Квартирмейстер
+job-name-cargotech = Техник отдела снабжения
+job-name-chef = Шеф-повар
+job-name-clown = Клоун
+job-name-ertleader = Лидер ОБР
+job-name-ertchaplain = Капеллан ОБР
+job-name-ertengineer = Инженер ОБР
+job-name-ertsecurity = Сотрудник безопасности ОБР
+job-name-ertmedic = Медик ОБР
+job-name-ertjanitor = Уборщик ОБР
+job-name-boxer = Боксёр
+job-name-zookeeper = Смотритель зоопарка
+job-name-visitor = Посетитель
+job-name-cluwne = Клувн
 
-# typan-
-job-name-typan-researcher = Оперативник Нордфолла
-job-name-typan-atmos-tech = Военный Инженер Нордфолла
-job-name-typan-botanist = Ботаник Синдиката
-job-name-typan-cargotech = Взводный Сержант Нордфолла
-job-name-typan-chef = Сервисный Работник Нордфолла
-job-name-typan-medic = Полевой Медик Нордфолла
-job-name-typan-rd = Директор Боевых Операций
-job-name-typan-science = Научный Сотрудник Нордфолла
-job-name-typan-telecommunications-officer = Офицер телекомуникаций Нордфолла
+# неиспользуемые профессии
+# они нужны для подсказок о иконках в ID агенте
+# я оставляю их для ролевых возможностей
+job-name-geneticist = Генетик
+job-name-no-id = Без ID
+job-name-prisoner = Заключённый
+job-name-roboticist = Робототехник
+job-name-syndicate = Синдикат
+job-name-unknown = Неизвестно
+job-name-virologist = Вирусолог
+job-name-zombie = Зомби
 
-job-name-outpost-syndicate-shareholder = Акционер Синдиката
+# Названия профессий
+job-title-visitor = Посетитель
+job-title-cluwne = Клувн
+job-title-universal = Универсальный
 
-# luatech
-job-name-ops-luatech = Оперативник Lua Technologies
-JobOpsLuaTech = Оперативник Lua Technologies
-
-# Typan
-JobTypanAtmosTech = Военный Инженер Нордфолла
-JobTypanBotanist = Ботаник Синдиката
-JobTypanCargotech = Взводный Сержант Нордфолла
-JobTypanChef = Сервисный Работник Нордфолла
-JobTypanMedic = Полевой Медик Нордфолла
-JobTypanRD = Директор Боевых Операций
-JobTypanScience = Научный Сотрудник Нордфолла
-JobTypanTelecommunicationsOfficer = Офицер телекомуникаций Нордфолла
-
-JobOutpostSyndicateShareholder = Акционер Синдиката
-
-# CentComm
-
-
-job-name-centcom-officer = Офицер ЦК
-
-JobCentralCommandOfficer = Офицер ЦК
-
-job-name-fsfcommander-bravo = Командир Рейнджеров Браво
-job-name-fsfspecialist-bravo = Специалист Рейнджеров Браво
-job-name-fsfcommander-charlie = Командир Рейнджеров Чарли
-job-name-fsfspecialist-charlie = Специалист Рейнджеров Чарли
+# Таймеры ролей - расположите в алфавитном порядке
+JobAtmosphericTechnician = Атмосферный техник
+JobBartender = Бармен
+JobBorg = Киборг
+JobBotanist = Ботаник
+JobBoxer = Боксёр
+JobCaptain = Капитан
+JobCargoTechnician = Техник отдела снабжения
+JobCentralCommandOfficial = Представитель Центрального командования
+JobChaplain = Капеллан
+JobChef = Шеф-повар
+JobChemist = Химик
+# Frontier: Chief Engineer < Plant Manager
+JobChiefEngineer = Управляющий заводом
+JobChiefMedicalOfficer = Главный врач
+JobClown = Клоун
+JobDetective = Детектив
+JobBrigmedic = Медик брига
+JobERTChaplain = Капеллан ОБР
+JobERTEngineer = Инженер ОБР
+JobERTJanitor = Уборщик ОБР
+JobERTLeader = Лидер ОБР
+JobERTMedical = Медик ОБР
+JobERTSecurity = Сотрудник безопасности ОБР
+# Frontier: Head of Personnel < Station Representative
+JobHeadOfPersonnel = Представитель станции
+# Frontier: Head of Security < Sheriff
+JobHeadOfSecurity = Шериф
+JobJanitor = Уборщик
+JobLawyer = Адвокат
+JobLibrarian = Библиотекарь
+JobMedicalDoctor = Врач
+JobMedicalIntern = Интерн медицины
+JobMime = Мим
+JobMusician = Музыкант
+JobParamedic = Парамедик
+# Frontier: Passenger < Contractor
+JobPassenger = Подрядчик
+JobPsychologist = Психолог
+JobQuartermaster = Квартирмейстер
+JobReporter = Репортёр
+JobResearchAssistant = Лаборант
+JobResearchDirector = Научный руководитель
+JobSalvageSpecialist = Утилизатор
+JobScientist = Учёный
+# Frontier: Security Cadet < Cadet
+JobSecurityCadet = Кадет
+# Frontier: Security Officer < Deputy
+JobSecurityOfficer = Заместитель
+JobServiceWorker = Работник сферы обслуживания
+JobStationAi = Станционный ИИ
+JobStationEngineer = Инженер станции
+JobTechnicalAssistant = Технический ассистент
+JobVisitor = Посетитель
+# Frontier: Warden < Bailiff
+JobWarden = Судебный пристав
+JobZookeeper = Смотритель зоопарка

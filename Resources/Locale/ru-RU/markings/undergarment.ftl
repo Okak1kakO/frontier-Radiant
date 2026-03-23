@@ -1,17 +1,21 @@
-marking-UndergarmentTopTanktop = Tanktop
-marking-UndergarmentTopBinder = Binder
-marking-UndergarmentTopBra = Classic Bra
-marking-UndergarmentTopSportsbra = Sports Bra
-marking-UndergarmentBottomBoxers = Boxers
-marking-UndergarmentBottomBriefs = Briefs
-marking-UndergarmentBottomSatin = Satin
-marking-UndergarmentTopTanktopVox = Tanktop
-marking-UndergarmentTopBinderVox = Binder
-marking-UndergarmentTopBraVox = Classic Bra
-marking-UndergarmentTopSportsbraVox = Sports Bra
-marking-UndergarmentBottomBoxersVox = Boxers
-marking-UndergarmentBottomBriefsVox = Briefs
-marking-UndergarmentBottomSatinVox = Satin
-marking-UndergarmentBottomBoxersReptilian = Boxers
-marking-UndergarmentBottomBriefsReptilian = Briefs
-marking-UndergarmentBottomSatinReptilian = Satin
+marking-UndergarmentTopTanktop = Майка-алкоголичка
+marking-UndergarmentTopBinder = Биндер
+marking-UndergarmentTopBra = Классический бюстгальтер
+marking-UndergarmentTopSportsbra = Спортивный бюстгальтер
+
+marking-UndergarmentBottomBoxers = Боксеры
+marking-UndergarmentBottomBriefs = Плавки
+marking-UndergarmentBottomSatin = Сатиновые трусы
+
+marking-UndergarmentTopTanktopVox = Майка-алкоголичка (вокс)
+marking-UndergarmentTopBinderVox = Биндер (вокс)
+marking-UndergarmentTopBraVox = Классический бюстгальтер (вокс)
+marking-UndergarmentTopSportsbraVox = Спортивный бюстгальтер (вокс)
+
+marking-UndergarmentBottomBoxersVox = Боксеры (вокс)
+marking-UndergarmentBottomBriefsVox = Плавки (вокс)
+marking-UndergarmentBottomSatinVox = Сатиновые трусы (вокс)
+
+marking-UndergarmentBottomBoxersReptilian = Боксеры (рептилия)
+marking-UndergarmentBottomBriefsReptilian = Плавки (рептилия)
+marking-UndergarmentBottomSatinReptilian = Сатиновые трусы (рептилия)
