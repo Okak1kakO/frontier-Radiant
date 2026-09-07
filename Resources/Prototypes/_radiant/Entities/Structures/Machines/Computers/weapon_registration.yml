@@ -1,0 +1,18 @@
+﻿# Консоль регистрации оружия: выдаёт серийный номер и вносит оружие
+# в локальную базу данных текущего раунда. (Radiant sector)
+- type: entity
+  parent: BaseComputer
+  id: ComputerWeaponRegistration
+  name: консоль регистрации оружия
+  description: Вставьте огнестрельное оружие, чтобы зарегистрировать его и получить серийный номер. Данные хранятся только до конца раунда.
+  components:
+  - type: WeaponRegistrationConsole
+    weaponSlot:
+      name: weapon-registration-slot-name
+      insertOnInteract: true
+      ejectOnUse: true
+      ejectOnBreak: true
+      whitelistFailPopup: weapon-registration-not-weapon
+      whitelist:
+        components:
+        - Gun

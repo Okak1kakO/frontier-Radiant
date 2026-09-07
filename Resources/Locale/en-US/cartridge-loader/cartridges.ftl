@@ -71,7 +71,7 @@ nano-task-printed-medium-priority = [bold]Priority[/bold]: Medium
 nano-task-printed-low-priority = [bold]Priority[/bold]: Low
 
 # Wanted list cartridge
-wanted-list-program-name = Wanted list
+wanted-list-program-name = OSK Database
 wanted-list-label-no-records = It's all right, cowboy
 wanted-list-search-placeholder = Search by name and status
 
@@ -102,3 +102,24 @@ wanted-list-status-label = [color=darkgray]status:[/color] {$status ->
 wanted-list-history-table-time-col = Time
 wanted-list-history-table-reason-col = Crime
 wanted-list-history-table-initiator-col = Initiator
+
+# Radiant: OSK weapon registry page
+weapon-registry-nav-button = Registered weapons
+weapon-registry-title = OSK Database
+weapon-registry-back = Back
+weapon-registry-no-entries = No registered weapons
+weapon-registry-search-placeholder = Search: serial, name, owner
+weapon-registry-no-matches = No matches
+weapon-registry-detail-weapon = [color=darkgray]Weapon:[/color] [color=white]{$name}[/color]
+weapon-registry-detail-serial = [color=darkgray]Serial number:[/color] [color=white]{$serial}[/color]
+weapon-registry-detail-owner-set = [color=darkgray]Owner:[/color] [color=white]{$owner}[/color]
+weapon-registry-detail-owner-unset = [color=darkgray]Owner:[/color] [color=white]not specified[/color]
+weapon-registry-owner-placeholder = Owner name (optional)
+weapon-registry-owner-save = Save owner
+weapon-registry-rarity-common = [color=darkgray]Common[/color]
+weapon-registry-rarity-uncommon = [color=#33FF44]Uncommon[/color]
+weapon-registry-rarity-rare = [color=#33CCFF]Rare[/color]
+weapon-registry-rarity-epic = [color=#CC66FF]Epic[/color]
+weapon-registry-rarity-legendary = [color=#FFCC00]Legendary[/color]
+weapon-registry-rarity-unique = [color=#584FB3]Factory[/color]
+weapon-registry-rarity-uniqueWrittenoff = [color=#CE8151]Written off[/color]

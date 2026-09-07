@@ -67,7 +67,7 @@ nano-task-printed-high-priority = [bold]Приоритет[/bold]: [color=red]В
 nano-task-printed-medium-priority = [bold]Приоритет[/bold]: Средний
 nano-task-printed-low-priority = [bold]Приоритет[/bold]: Низкий
 # Wanted list cartridge
-wanted-list-program-name = Список разыскиваемых
+wanted-list-program-name = База данных ОСК
 wanted-list-label-no-records = Всё спокойно, ковбой.
 wanted-list-search-placeholder = Поиск по имени и статусу
 wanted-list-age-label = [color=darkgray]Возраст:[/color] [color=white]{ $age }[/color]
@@ -93,3 +93,24 @@ wanted-list-status-label = [color=darkgray]статус:[/color] { $status ->
 wanted-list-history-table-time-col = Время
 wanted-list-history-table-reason-col = Преступление
 wanted-list-history-table-initiator-col = Инициатор
+
+# Radiant: OSK weapon registry page
+weapon-registry-nav-button = Зарегистрированное оружие
+weapon-registry-title = База данных ОСК
+weapon-registry-back = Назад
+weapon-registry-no-entries = Нет зарегистрированного оружия
+weapon-registry-search-placeholder = Поиск: серийник, название, владелец
+weapon-registry-no-matches = Ничего не найдено
+weapon-registry-detail-weapon = [color=darkgray]Оружие:[/color] [color=white]{$name}[/color]
+weapon-registry-detail-serial = [color=darkgray]Серийный номер:[/color] [color=white]{$serial}[/color]
+weapon-registry-detail-owner-set = [color=darkgray]Владелец:[/color] [color=white]{$owner}[/color]
+weapon-registry-detail-owner-unset = [color=darkgray]Владелец:[/color] [color=white]не указан[/color]
+weapon-registry-owner-placeholder = Имя владельца (необязательно)
+weapon-registry-owner-save = Сохранить владельца
+weapon-registry-rarity-common = [color=darkgray]Обычное[/color]
+weapon-registry-rarity-uncommon = [color=#33FF44]Необычное[/color]
+weapon-registry-rarity-rare = [color=#33CCFF]Редкое[/color]
+weapon-registry-rarity-epic = [color=#CC66FF]Эпическое[/color]
+weapon-registry-rarity-legendary = [color=#FFCC00]Легендарное[/color]
+weapon-registry-rarity-unique = [color=#584FB3]Заводское[/color]
+weapon-registry-rarity-uniqueWrittenoff = [color=#CE8151]Списанное[/color]

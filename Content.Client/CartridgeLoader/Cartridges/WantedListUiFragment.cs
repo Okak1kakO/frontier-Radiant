@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Security;
 using Content.Shared.StatusIcon;
@@ -26,6 +27,13 @@ public sealed partial class WantedListUiFragment : BoxContainer
     private string? _selectedTargetName;
     private List<WantedRecord> _wantedRecords = new();
 
+    // OSK weapon registry page state.
+    private string? _selectedSerial;
+    private List<WeaponRegistryEntry> _registryEntries = new();
+
+    // Raised with (serial, owner). Null owner means "clear the owner name".
+    public event Action<string, string?>? OnOwnerSaved;
+
     public WantedListUiFragment()
     {
         RobustXamlLoader.Load(this);
@@ -33,6 +41,11 @@ public sealed partial class WantedListUiFragment : BoxContainer
         _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
 
         SearchBar.OnTextChanged += OnSearchBarTextChanged;
+        RegistrySearchBar.OnTextChanged += OnRegistrySearchTextChanged;
+        RegistryNavButton.OnPressed += _ => ShowRegistry(true);
+        RegistryBackButton.OnPressed += _ => ShowRegistry(false);
+        SaveOwnerButton.OnPressed += _ => SaveOwner();
+        OwnerEdit.OnTextEntered += _ => SaveOwner();
     }
 
     private void OnSearchBarTextChanged(LineEdit.LineEditEventArgs args)
@@ -243,6 +256,135 @@ public sealed partial class WantedListUiFragment : BoxContainer
                 data);
         }
     }
+
+    /// <summary>
+    ///     Switches between the wanted list page and the weapon registry page.
+    /// </summary>
+    private void ShowRegistry(bool show)
+    {
+        WantedPage.Visible = !show;
+        RegistryPage.Visible = show;
+        if (show)
+            UpdateRegistry(_registryEntries, false); // re-render from cached data
+    }
+
+    /// <summary>
+    ///     Renders the registry entries pushed by WeaponSerialSystem.
+    /// </summary>
+    public void UpdateRegistry(List<WeaponRegistryEntry> entries, bool refresh = true)
+    {
+        if (refresh)
+            _registryEntries = entries;
+
+        // Re-render goes through the search filter: if the player is mid-search,
+        // a pushed server update or a page switch must not reset their filter.
+        RenderRegistry(FilterRegistry(RegistrySearchBar.Text));
+    }
+
+    /// <summary>
+    ///     Client-side filtering. The whole registry is already in memory, so there
+    ///     is no reason to round-trip the server just to narrow the list.
+    /// </summary>
+    private List<WeaponRegistryEntry> FilterRegistry(string? text)
+    {
+        if (String.IsNullOrWhiteSpace(text))
+            return _registryEntries;
+
+        return _registryEntries.FindAll(e =>
+            e.Serial.Contains(text, StringComparison.OrdinalIgnoreCase) ||
+            e.Name.Contains(text, StringComparison.OrdinalIgnoreCase) ||
+            (e.Owner != null && e.Owner.Contains(text, StringComparison.OrdinalIgnoreCase)) ||
+            e.Rarity.ToString().Contains(text, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private void OnRegistrySearchTextChanged(LineEdit.LineEditEventArgs args)
+    {
+        // args.Text, not RegistrySearchBar.Text: the event args carry the exact
+        // value at the moment of the event, which is the honest source here.
+        RenderRegistry(FilterRegistry(args.Text));
+    }
+
+    /// <summary>
+    ///     Draws the given subset of entries and picks the right "empty" message:
+    ///     the registry has no weapons at all vs. the filter matched nothing.
+    /// </summary>
+    private void RenderRegistry(List<WeaponRegistryEntry> toShow)
+    {
+        RegistryList.GenerateItem = GenerateRegistryItem;
+        RegistryList.ItemPressed = OnRegistryItemSelected;
+        var dataList = new List<ListData>();
+        foreach (var entry in toShow)
+            dataList.Add(new WeaponRegistryListData(entry));
+        RegistryList.PopulateList(dataList);
+
+        var empty = toShow.Count == 0;
+        var filterActive = !String.IsNullOrWhiteSpace(RegistrySearchBar.Text);
+        NoRegistryEntries.Visible = empty && !filterActive;
+        NoRegistryMatches.Visible = empty && filterActive;
+        RegistryList.Visible = !empty;
+        if (empty)
+        {
+            RegistryDetail.Visible = false;
+            _selectedSerial = null;
+        }
+    }
+
+    private void OnRegistryItemSelected(BaseButton.ButtonEventArgs args, ListData data)
+    {
+        if (data is not WeaponRegistryListData(var entry))
+            return;
+
+        _selectedSerial = entry.Serial;
+
+        DetailWeapon.SetMessage(BuildMessage("weapon-registry-detail-weapon", ("name", entry.Name)));
+        DetailSerial.SetMessage(BuildMessage("weapon-registry-detail-serial", ("serial", entry.Serial)));
+        // The loc key mirrors the enum member name, e.g. weapon-registry-rarity-uniqueWrittenoff.
+        DetailRarity.SetMessage(BuildMessage("weapon-registry-rarity-" + entry.Rarity));
+        DetailOwner.SetMessage(entry.Owner == null
+            ? BuildMessage("weapon-registry-detail-owner-unset")
+            : BuildMessage("weapon-registry-detail-owner-set", ("owner", entry.Owner)));
+
+        // Pre-fill the field: clearing it and pressing save removes the owner.
+        OwnerEdit.Text = entry.Owner ?? string.Empty;
+
+        RegistryDetail.Visible = true;
+    }
+
+    private void GenerateRegistryItem(ListData data, ListContainerButton button)
+    {
+        if (data is not WeaponRegistryListData(var entry))
+            return;
+
+        button.AddChild(new Label() { Text = entry.Serial, ClipText = true });
+        button.AddStyleClass(ListContainer.StyleClassListContainerButton);
+
+        if (entry.Serial.Equals(_selectedSerial))
+        {
+            button.Pressed = true;
+            // Same workaround as the wanted list: Pressed change does not raise the event.
+            OnRegistryItemSelected(
+                new(button, new(new(), BoundKeyState.Down, new(), false, new(), new())),
+                data);
+        }
+    }
+
+    private void SaveOwner()
+    {
+        if (_selectedSerial == null)
+            return;
+
+        var text = OwnerEdit.Text.Trim();
+        OnOwnerSaved?.Invoke(_selectedSerial, string.IsNullOrEmpty(text) ? null : text);
+    }
+
+    private FormattedMessage BuildMessage(string fluentId, params (string, object)[] args)
+    {
+        var msg = new FormattedMessage();
+        msg.AddMarkupPermissive(Loc.GetString(fluentId, args));
+        return msg;
+    }
 }
 
 internal record StatusListData(WantedRecord Record) : ListData;
+
+internal record WeaponRegistryListData(WeaponRegistryEntry Entry) : ListData;
