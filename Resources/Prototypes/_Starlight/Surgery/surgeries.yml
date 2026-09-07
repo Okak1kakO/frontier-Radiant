@@ -39,7 +39,6 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryCloseIncision
-  abstract: true # Radiant sector: torso cavities now have independent closing operations.
   name: Close Incision
   components:
   - type: Surgery
@@ -58,6 +57,7 @@
   - type: SurgeryPartCondition
     parts:
     - Torso
+  - type: SurgeryNoOpenCavitiesCondition
 
 - type: entity
   parent: SurgeryCloseIncision

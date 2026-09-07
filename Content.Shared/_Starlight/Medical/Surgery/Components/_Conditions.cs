@@ -45,6 +45,11 @@ public sealed partial class SurgeryCavityConditionComponent : Component
     [DataField]
     public bool Open = true;
 }
+
+/// <summary>Radiant sector: requires every independent torso cavity to be closed.</summary>
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
+public sealed partial class SurgeryNoOpenCavitiesConditionComponent : Component;
+
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
 public sealed partial class SurgerySpeciesConditionComponent : Component
 {

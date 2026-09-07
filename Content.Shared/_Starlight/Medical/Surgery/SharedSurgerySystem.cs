@@ -78,6 +78,9 @@ public abstract partial class SharedSurgerySystem : EntitySystem
              || !surgeryEnt.Comp.Steps.Contains(stepId))
             return false;
 
+        if (IsHandSurgeryBlockedByCuffs(body, targetPart))
+            return false;
+
         // Radiant sector: ERP opt-out is a live safety condition. Unlike
         // anatomical conditions, it must remain enforced after surgery starts.
         if (IsAdultSurgery(surgeryEnt)

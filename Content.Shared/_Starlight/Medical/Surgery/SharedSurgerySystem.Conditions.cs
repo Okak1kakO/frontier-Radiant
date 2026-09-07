@@ -6,6 +6,7 @@ using Content.Shared._Starlight.Medical.Surgery.Events;
 using Content.Shared.Body.Systems;
 using Content.Shared._Starlight.Medical.Body.Part;
 using Content.Shared._Starlight.Medical.Surgery.Components;
+using Content.Shared.Cuffs.Components;
 using Content.Shared._radiant;
 using Content.Shared._radiant.ERP;
 using Content.Shared.DetailExaminable;
@@ -24,6 +25,7 @@ public abstract partial class SharedSurgerySystem
 
         SubscribeLocalEvent<SurgeryPartConditionComponent, SurgeryValidEvent>(OnPartConditionValid);
         SubscribeLocalEvent<SurgeryCavityConditionComponent, SurgeryValidEvent>(OnCavityConditionValid);
+        SubscribeLocalEvent<SurgeryNoOpenCavitiesConditionComponent, SurgeryValidEvent>(OnNoOpenCavitiesConditionValid);
         SubscribeLocalEvent<SurgerySpeciesConditionComponent, SurgeryValidEvent>(OnSpeciesConditionValid);
         SubscribeLocalEvent<SurgeryOrganExistConditionComponent, SurgeryValidEvent>(OnOrganExistConditionValid);
         SubscribeLocalEvent<SurgeryOrganDontExistConditionComponent, SurgeryValidEvent>(OnOrganDontExistConditionValid);
@@ -44,6 +46,13 @@ public abstract partial class SharedSurgerySystem
         var isOpen = TryComp<SurgicalCavityStateComponent>(args.Part, out var cavities)
                      && cavities.IsOpen(ent.Comp.Cavity);
         if (isOpen != ent.Comp.Open)
+            args.Cancelled = true;
+    }
+
+    private void OnNoOpenCavitiesConditionValid(Entity<SurgeryNoOpenCavitiesConditionComponent> ent, ref SurgeryValidEvent args)
+    {
+        if (TryComp<SurgicalCavityStateComponent>(args.Part, out var cavities)
+            && (cavities.RibcageOpen || cavities.AbdomenOpen || cavities.GroinOpen))
             args.Cancelled = true;
     }
 
@@ -166,6 +175,12 @@ public abstract partial class SharedSurgerySystem
 
     private void OnPartConditionValid(Entity<SurgeryPartConditionComponent> ent, ref SurgeryValidEvent args)
     {
+        if (IsHandSurgeryBlockedByCuffs(args.Body, args.Part))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
         if (ent.Comp.Parts.Count == 0)
             return;
 
@@ -242,4 +257,15 @@ public abstract partial class SharedSurgerySystem
 
     private static string NormalizeLimbSlot(string slot)
         => slot.Replace('_', ' ').ToLowerInvariant();
+
+    private bool IsHandSurgeryBlockedByCuffs(EntityUid body, EntityUid part)
+    {
+        if (!TryComp<BodyPartComponent>(part, out var bodyPart)
+            || bodyPart.PartType is not (BodyPartType.Arm or BodyPartType.Hand)
+            || !TryComp<CuffableComponent>(body, out var cuffable)
+            || cuffable.Container == null)
+            return false;
+
+        return cuffable.Container.ContainedEntities.Count > 0;
+    }
 }
