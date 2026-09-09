@@ -13,6 +13,7 @@ using Content.Shared.PDA.Ringer;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -32,6 +33,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly WeaponSerialSystem _weaponSerial = default!; // Radiant
+    [Dependency] private readonly TagSystem _tags = default!; // Radiant
 
     private void InitializeUi()
     {
@@ -182,7 +184,11 @@ public sealed partial class StoreSystem
         if (listing.ProductEntity != null)
         {
             var product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
-            _weaponSerial.TryAssignSerial(product); // Radiant: serial for purchased weapons
+            // Radiant: only the NFSD security uplink issues a serial number to weapons.
+            // The seller (this store entity) carries the inherited SecurityUplink tag
+            // (see BaseSecurityUplinkRadio), so weapons bought anywhere else stay serial-less.
+            if (_tags.HasTag(uid, "SecurityUplink"))
+                _weaponSerial.RegisterWeapon(product);
             _hands.PickupOrDrop(buyer, product);
 
             HandleRefundComp(uid, component, product);

@@ -34,6 +34,10 @@ public sealed partial class WantedListUiFragment : BoxContainer
     // Raised with (serial, owner). Null owner means "clear the owner name".
     public event Action<string, string?>? OnOwnerSaved;
 
+    // Raised when the player switches to the registry page, so WantedListUi can
+    // ask the server to re-send the current registry snapshot.
+    public event Action? OnRegistryRefresh;
+
     public WantedListUiFragment()
     {
         RobustXamlLoader.Load(this);
@@ -265,7 +269,13 @@ public sealed partial class WantedListUiFragment : BoxContainer
         WantedPage.Visible = !show;
         RegistryPage.Visible = show;
         if (show)
+        {
+            // Ask the server for the current registry. This happens when the window
+            // is already open and the fragment attached, so the answer is guaranteed
+            // to arrive and the list is never stale/empty on a fresh open.
+            OnRegistryRefresh?.Invoke();
             UpdateRegistry(_registryEntries, false); // re-render from cached data
+        }
     }
 
     /// <summary>
@@ -274,7 +284,18 @@ public sealed partial class WantedListUiFragment : BoxContainer
     public void UpdateRegistry(List<WeaponRegistryEntry> entries, bool refresh = true)
     {
         if (refresh)
-            _registryEntries = entries;
+        {
+            _registryEntries = entries.DistinctBy(e => e.Serial).ToList();
+
+            // A fresh server snapshot while an entry is selected (e.g. right after an
+            // owner name was saved) must refresh the detail pane too, otherwise the
+            // owner label would keep showing the previous value until re-selection.
+            if (_selectedSerial is { } serial
+                && _registryEntries.FirstOrDefault(e => e.Serial == serial) is { } updated)
+            {
+                RenderRegistryDetail(updated);
+            }
+        }
 
         // Re-render goes through the search filter: if the player is mid-search,
         // a pushed server update or a page switch must not reset their filter.
@@ -335,11 +356,19 @@ public sealed partial class WantedListUiFragment : BoxContainer
             return;
 
         _selectedSerial = entry.Serial;
+        RenderRegistryDetail(entry);
+    }
 
+    private void RenderRegistryDetail(WeaponRegistryEntry entry)
+    {
         DetailWeapon.SetMessage(BuildMessage("weapon-registry-detail-weapon", ("name", entry.Name)));
         DetailSerial.SetMessage(BuildMessage("weapon-registry-detail-serial", ("serial", entry.Serial)));
-        // The loc key mirrors the enum member name, e.g. weapon-registry-rarity-uniqueWrittenoff.
-        DetailRarity.SetMessage(BuildMessage("weapon-registry-rarity-" + entry.Rarity));
+        // The loc keys are lowercase-first while enum members start with an upper-case
+        // letter (e.g. UniqueWrittenoff -> uniqueWrittenoff), so fold the first character.
+        var rarity = entry.Rarity.ToString();
+        var rarityName = string.Concat(rarity.Substring(0, 1).ToLowerInvariant(), rarity.Substring(1));
+        var rarityKey = string.Concat("weapon-registry-rarity-", rarityName);
+        DetailRarity.SetMessage(BuildMessage(rarityKey));
         DetailOwner.SetMessage(entry.Owner == null
             ? BuildMessage("weapon-registry-detail-owner-unset")
             : BuildMessage("weapon-registry-detail-owner-set", ("owner", entry.Owner)));

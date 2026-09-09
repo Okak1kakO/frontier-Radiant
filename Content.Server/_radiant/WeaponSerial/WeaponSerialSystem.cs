@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Server.CartridgeLoader;
 using Content.Shared._NF.Weapons.Rarity;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
@@ -10,6 +9,7 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared._radiant.WeaponSerial;
 using Content.Shared._radiant.WeaponSerial.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -31,7 +31,7 @@ public sealed partial class WeaponSerialSystem : SharedWeaponSerialSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly CartridgeLoaderSystem _cartridge = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
     // Round-scoped database. Serial number -> entry about the registered weapon.
     private readonly Dictionary<string, WeaponSerialEntry> _registry = new();
@@ -50,6 +50,15 @@ public sealed partial class WeaponSerialSystem : SharedWeaponSerialSystem
         // already owns (WantedListCartridgeComponent, CartridgeUiReadyEvent).
         SubscribeLocalEvent<WeaponRegistryCartridgeComponent, CartridgeUiReadyEvent>(OnCartridgeUiReady);
         SubscribeLocalEvent<WeaponRegistryCartridgeComponent, WeaponRegistryUiMessageEvent>(OnRegistryMessage);
+
+        // Note: we deliberately do NOT subscribe to BoundUIOpenedEvent on the loader.
+        // The loader BUI (PdaUiKey for PDAs) stores ONE canonical state per key, and
+        // PdaSystem refreshes it to a CartridgeLoaderUiState subclass when the window
+        // opens. Pushing our WeaponRegistryUiState from an open handler races with that
+        // refresh: if we run last, the window opens with our state instead of the
+        // program list and looks empty until the cartridge is ejected and reinserted.
+        // Instead the client asks for a snapshot (empty-serial message) and the loader
+        // raises CartridgeUiReadyEvent whenever the OSK program is activated.
     }
 
 
@@ -135,9 +144,7 @@ public sealed partial class WeaponSerialSystem : SharedWeaponSerialSystem
         Dirty(weaponUid, comp);
 
         // Push the fresh registry to every OSK database cartridge so the list updates live.
-        var query = EntityQueryEnumerator<WeaponRegistryCartridgeComponent>();
-        while (query.MoveNext(out var cartridgeUid, out _))
-            UpdateCartridgeUi(cartridgeUid);
+        BroadcastRegistry();
 
         return serial;
     }
@@ -173,7 +180,17 @@ public sealed partial class WeaponSerialSystem : SharedWeaponSerialSystem
     /// </summary>
     private void OnCartridgeUiReady(Entity<WeaponRegistryCartridgeComponent> ent, ref CartridgeUiReadyEvent args)
     {
-        UpdateCartridgeUi(ent);
+        // UIReady is raised after the PDA has attached the fragment. Use its
+        // authoritative loader directly so this snapshot is written after the
+        // PDA's normal state update and cannot be lost during a reopen.
+        if (!TryComp(args.Loader, out CartridgeLoaderComponent? loader)
+            || !_userInterfaceSystem.HasUi(args.Loader, loader.UiKey))
+            return;
+
+        _userInterfaceSystem.SetUiState(
+            args.Loader,
+            loader.UiKey,
+            new WeaponRegistryUiState(BuildRegistrySnapshot()));
     }
 
     /// <summary>
@@ -182,28 +199,111 @@ public sealed partial class WeaponSerialSystem : SharedWeaponSerialSystem
     /// </summary>
     private void OnRegistryMessage(EntityUid uid, WeaponRegistryCartridgeComponent component, WeaponRegistryUiMessageEvent args)
     {
-        if (_registry.TryGetValue(args.Serial, out var entry))
-            _registry[args.Serial] = entry with { Owner = args.Owner };
+        // Refresh request: empty serial means "send me the current registry".
+        if (string.IsNullOrWhiteSpace(args.Serial))
+        {
+            // The loader uid comes from the active PDA UI message. Send directly to
+            // that loader instead of rediscovering it through cartridge ownership.
+            // The latter can be stale when the PDA has just been reopened.
+            var loaderUid = GetEntity(args.LoaderUid);
+            if (TryComp(loaderUid, out CartridgeLoaderComponent? loader)
+                && _userInterfaceSystem.HasUi(loaderUid, loader.UiKey))
+            {
+                _userInterfaceSystem.SetUiState(
+                    loaderUid,
+                    loader.UiKey,
+                    new WeaponRegistryUiState(BuildRegistrySnapshot()));
+            }
 
-        UpdateCartridgeUi(uid);
+            return;
+        }
+
+        // Owner save: look up the entry and update it.
+        if (_registry.TryGetValue(args.Serial, out var entry))
+        {
+            _registry[args.Serial] = entry with { Owner = args.Owner };
+        }
+
+        // Broadcast the update to every open OSK database window.
+        BroadcastRegistry();
+    }
+
+    private List<WeaponRegistryEntry> BuildRegistrySnapshot()
+    {
+        return _registry.Values
+            .OrderBy(e => e.SerialNumber, StringComparer.Ordinal)
+            .Select(e => new WeaponRegistryEntry(e.SerialNumber, e.WeaponName, e.Rarity, e.Owner))
+            .ToList();
     }
 
     /// <summary>
-    ///     Sends the whole registry snapshot to the cartridge loader UI.
+    ///     Pushes a registry snapshot to one open OSK database window.
+    ///     The fragment UI lives inside the loader/PDA window: the client's
+    ///     CartridgeLoaderBoundUserInterface forwards any non-CartridgeLoaderUiState
+    ///     it receives on the loader's UiKey to the active program fragment. So the
+    ///     state is sent to the loader (PDA) with the loader's UiKey.
+    ///     The state slot is shared with the loader's own program-list state, so we
+    ///     only push while an OSK window is actually open AND displaying this
+    ///     cartridge. Pushing to a closed PDA would overwrite its program-list state
+    ///     and make the next open show an empty window.
     /// </summary>
-    private void UpdateCartridgeUi(EntityUid cartridgeUid)
+    private void PushRegistry(
+        EntityUid cartridgeUid,
+        EntityUid loaderUid,
+        List<WeaponRegistryEntry> entries)
     {
-        // The cartridge knows its loader (the PDA itself) only through this component.
-        if (!TryComp<CartridgeComponent>(cartridgeUid, out var cartridge)
-            || cartridge.LoaderUid is not { } loaderUid)
+        if (!cartridgeUid.IsValid() || !loaderUid.IsValid())
             return;
 
-        var entries = _registry.Values
-            .OrderBy(e => e.SerialNumber)
-            .Select(e => new WeaponRegistryEntry(e.SerialNumber, e.WeaponName, e.Rarity, e.Owner))
-            .ToList();
+        if (!TryComp<CartridgeLoaderComponent>(loaderUid, out var loaderComp))
+            return;
 
-        _cartridge.UpdateCartridgeUiState(loaderUid, new WeaponRegistryUiState(entries));
+        // Only an open window that is currently showing the OSK database needs a
+        // live snapshot. On every fresh open the client re-requests the registry
+        // itself (empty-serial message / CartridgeUiReadyEvent), so skipping here
+        // never leaves a window without data.
+        if (loaderComp.ActiveProgram != cartridgeUid)
+            return;
+
+        if (!_userInterfaceSystem.IsUiOpen(loaderUid, loaderComp.UiKey))
+            return;
+
+        _userInterfaceSystem.SetUiState(loaderUid, loaderComp.UiKey, new WeaponRegistryUiState(entries));
+    }
+
+    /// <summary>
+    ///     Sends the fresh registry to every currently open OSK database window.
+    ///     Installed copies know their loader through CartridgeComponent.LoaderUid;
+    ///     a physical cartridge sitting in a loader slot is found through the slot.
+    /// </summary>
+    private void BroadcastRegistry()
+    {
+        var entries = BuildRegistrySnapshot();
+        var notified = new HashSet<EntityUid>();
+
+        // Cartridges that have the registry component and know their loader directly.
+        var query = EntityQueryEnumerator<WeaponRegistryCartridgeComponent, CartridgeComponent>();
+        while (query.MoveNext(out var entityUid, out var _, out var cartridge))
+        {
+            if (cartridge.LoaderUid is { } loaderUid && notified.Add(entityUid))
+                PushRegistry(entityUid, loaderUid, entries);
+        }
+
+        // Loaders that may have a physical OSK cartridge in their cartridge slot.
+        var loaders = EntityQueryEnumerator<CartridgeLoaderComponent>();
+        while (loaders.MoveNext(out var loaderUid, out var loader))
+        {
+            var item = loader.CartridgeSlot.Item;
+            if (item == null || !HasComp<WeaponRegistryCartridgeComponent>(item))
+                continue;
+
+            var cartridgeUid = item.Value;
+            if (notified.Contains(cartridgeUid))
+                continue;
+
+            notified.Add(cartridgeUid);
+            PushRegistry(cartridgeUid, loaderUid, entries);
+        }
     }
 
     /// <summary>
@@ -211,7 +311,16 @@ public sealed partial class WeaponSerialSystem : SharedWeaponSerialSystem
     /// </summary>
     private string GenerateSerial()
     {
-        return $"CON-{_random.Next(0, 10000):D4}-{_random.Next(0, 10000):D4}";
+        // Uniqueness is guaranteed against the registry so one serial can never
+        // point at two weapons (that would silently overwrite another entry).
+        string serial;
+        do
+        {
+            serial = $"CON-{_random.Next(0, 10000):D4}-{_random.Next(0, 10000):D4}";
+        }
+        while (_registry.ContainsKey(serial));
+
+        return serial;
     }
 }
 

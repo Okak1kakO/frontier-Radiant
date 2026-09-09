@@ -289,7 +289,7 @@ namespace Content.Server.VendingMachines
 
             var ent = Spawn(vendComponent.NextItemToEject, spawnCoordinates);
 
-            _weaponSerial.TryAssignSerial(ent); // Radiant: serial for vended weapons
+            _weaponSerial.RegisterWeapon(ent); // Radiant: serial + registry for vended weapons
             _contraband.ClearContrabandValue(ent); // Frontier
 
             if (vendComponent.ThrowNextItem)
