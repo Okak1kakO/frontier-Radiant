@@ -5,9 +5,9 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client._radiant.WeaponSerial;
 
 /// <summary>
-///     Small sorting window of the OSK weapon registry program. It floats over the
+///     Small filter window of the OSK weapon registry program. It floats over the
 ///     PDA window (the fragment parents it to the UI modal root) and lets the
-///     player pick the order of the list.
+///     player pick the list order and the origin filter.
 ///     Analogy: a paper slip you put on top of the folder to choose how the cards
 ///     inside are sorted — pick one, the slip is gone, the folder is re-sorted.
 /// </summary>
@@ -21,7 +21,23 @@ public sealed partial class WeaponRegistryFilterPopup : Popup
     /// </summary>
     public event Action<WeaponRegistrySortMode>? OnSortSelected;
 
+    /// <summary>
+    ///     Raised when the player picks an origin. The value is the origin fluent
+    ///     id, <see cref="NoOriginFilter"/> for "weapons without a stamp" or null
+    ///     for "show everything". The caller applies it and closes the window.
+    /// </summary>
+    public event Action<string?>? OnOriginSelected;
+
+    // Filter value for "weapons registered without an origin stamp". The empty
+    // string is never a real fluent id, so it is a safe sentinel; null stays
+    // "show everything".
+    public const string NoOriginFilter = "";
+
     private readonly Dictionary<WeaponRegistrySortMode, Button> _buttons = new();
+
+    // Radio group of the origin section, separate from the sort one: picking an
+    // origin must not unpress the picked sort order.
+    private readonly ButtonGroup _originGroup = new();
 
     public WeaponRegistryFilterPopup()
     {
@@ -61,5 +77,52 @@ public sealed partial class WeaponRegistryFilterPopup : Popup
     {
         if (_buttons.TryGetValue(mode, out var button))
             button.Pressed = true;
+    }
+
+    /// <summary>
+    ///     Rebuilds the origin section: "all" first, then one button per origin
+    ///     present in the registry (localized label), then "no stamp" when at
+    ///     least one weapon has no origin at all. Rebuilt on every open, because
+    ///     the registry keeps growing during the round.
+    /// </summary>
+    public void SetOrigins(IReadOnlyList<string?> origins, string? selected)
+    {
+        OriginsContainer.RemoveAllChildren();
+
+        // key == selected does the whole "restore the pressed state" job: null ==
+        // null presses "all", the sentinel presses "no stamp", a fluent id presses
+        // its own button. Setting Pressed does not raise OnPressed, so nothing
+        // fires while the section is being built.
+        AddOriginButton(null, Loc.GetString("weapon-registry-filter-origin-all"), selected);
+
+        var hasUnset = false;
+        foreach (var origin in origins)
+        {
+            if (origin == null)
+            {
+                hasUnset = true;
+                continue;
+            }
+
+            AddOriginButton(origin, Loc.GetString(origin), selected);
+        }
+
+        if (hasUnset)
+            AddOriginButton(NoOriginFilter, Loc.GetString("weapon-registry-filter-origin-none"), selected);
+    }
+
+    private void AddOriginButton(string? key, string label, string? selected)
+    {
+        var button = new Button
+        {
+            Text = label,
+            ToggleMode = true,
+            Group = _originGroup,
+            HorizontalExpand = true,
+            Pressed = key == selected,
+        };
+
+        button.OnPressed += _ => OnOriginSelected?.Invoke(key);
+        OriginsContainer.AddChild(button);
     }
 }

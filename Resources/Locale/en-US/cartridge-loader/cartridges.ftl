@@ -107,8 +107,14 @@ wanted-list-history-table-initiator-col = Initiator
 weapon-registry-program-name = Registered weapons
 weapon-registry-title = OSK Database
 weapon-registry-filter-button = Filter
-weapon-registry-filter-title = Sort the list
-weapon-registry-filter-tooltip = Sorting: {$mode}
+weapon-registry-filter-title = List filter
+weapon-registry-filter-sort-title = Sorting
+weapon-registry-filter-origin-title = Origin
+weapon-registry-filter-tooltip = Sorting: {$mode}; showing: {$show}
+# Origin filter: all / no stamp / a concrete source (an uplink, a department).
+weapon-registry-filter-show-all = all
+weapon-registry-filter-origin-all = All
+weapon-registry-filter-origin-none = No origin
 # Sort orders of the list (one line = one entry in the filter window).
 weapon-registry-sort-date = Newest first
 weapon-registry-sort-owner-asc = Owner: A → Z

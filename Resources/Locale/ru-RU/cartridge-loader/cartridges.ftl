@@ -99,8 +99,14 @@ weapon-registry-program-name = Реестр оружия
 weapon-registry-title = База данных ОСК
 weapon-registry-no-entries = Нет зарегистрированного оружия
 weapon-registry-filter-button = Фильтр
-weapon-registry-filter-title = Сортировка списка
-weapon-registry-filter-tooltip = Сортировка: {$mode}
+weapon-registry-filter-title = Фильтр списка
+weapon-registry-filter-sort-title = Сортировка
+weapon-registry-filter-origin-title = Происхождение
+weapon-registry-filter-tooltip = Сортировка: {$mode}; показ: {$show}
+# Фильтр по происхождению: все / без метки / конкретный источник (аплинк, служба).
+weapon-registry-filter-show-all = всё
+weapon-registry-filter-origin-all = Все
+weapon-registry-filter-origin-none = Без происхождения
 # Пункты сортировки: одна строка = один пункт в окошке фильтра.
 weapon-registry-sort-date = Сначала новые
 weapon-registry-sort-owner-asc = Владелец: А → Я

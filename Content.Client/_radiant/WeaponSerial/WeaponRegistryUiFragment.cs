@@ -56,6 +56,11 @@ public sealed partial class WeaponRegistryUiFragment : BoxContainer
     // is "the moment the weapon appeared in the registry, newest first".
     private WeaponRegistrySortMode _sortMode = WeaponRegistrySortMode.DateAdded;
 
+    // Origin filter picked in the sorting window: null = show everything,
+    // NoOriginFilter = only weapons without an origin stamp, otherwise only
+    // weapons whose Origin fluent id matches the picked one.
+    private string? _originFilter;
+
     // The little sorting window that pops up OVER the PDA window. It is parented
     // to the UI modal root (not to us), so it floats above everything and closes
     // on a click outside; we own its lifetime and tidy it up in ExitedTree.
@@ -76,6 +81,7 @@ public sealed partial class WeaponRegistryUiFragment : BoxContainer
         _filterPopup = new WeaponRegistryFilterPopup();
         UserInterfaceManager.ModalRoot.AddChild(_filterPopup);
         _filterPopup.OnSortSelected += OnSortModeSelected;
+        _filterPopup.OnOriginSelected += OnOriginFilterSelected;
 
         UpdateFilterButtonTooltip();
     }
@@ -120,11 +126,17 @@ public sealed partial class WeaponRegistryUiFragment : BoxContainer
     }
 
     /// <summary>
-    ///     The list the program actually shows: the search filter plus the order
-    ///     the player picked in the sorting window. Both happen client-side — the
-    ///     whole registry is already in memory, so this needs no server trip.
+    ///     The list the program actually shows: the text search, the origin filter
+    ///     and the order picked in the sorting window. All three happen
+    ///     client-side — the whole registry is already in memory, so this needs
+    ///     no server trip.
     /// </summary>
-    private List<WeaponRegistryEntry> BuildList() => SortRegistry(FilterRegistry(RegistrySearchBar.Text));
+    private List<WeaponRegistryEntry> BuildList()
+    {
+        // The pipeline reads top-down: search narrows by text, origin narrows by
+        // source, sorting orders whatever survived both.
+        return SortRegistry(FilterByOrigin(FilterRegistry(RegistrySearchBar.Text)));
+    }
 
     /// <summary>
     ///     Orders the filtered entries.
@@ -235,6 +247,9 @@ public sealed partial class WeaponRegistryUiFragment : BoxContainer
     private void OpenFilterPopup()
     {
         _filterPopup.SetActiveMode(_sortMode);
+        // The origin section is rebuilt on every open: weapons registered since
+        // the last open can bring origins the section did not have yet.
+        _filterPopup.SetOrigins(GetKnownOrigins(), _originFilter);
         _filterPopup.Open(GetFilterPopupBox());
     }
 
@@ -270,7 +285,72 @@ public sealed partial class WeaponRegistryUiFragment : BoxContainer
 
     private void UpdateFilterButtonTooltip() =>
         RegistryFilterButton.ToolTip = Loc.GetString("weapon-registry-filter-tooltip",
-            ("mode", Loc.GetString(_sortMode.GetSortLabel())));
+            ("mode", Loc.GetString(_sortMode.GetSortLabel())),
+            ("show", GetOriginFilterLabel()));
+
+    /// <summary>The player picked an origin in the sorting window; null = all.</summary>
+    private void OnOriginFilterSelected(string? origin)
+    {
+        if (_originFilter != origin)
+        {
+            _originFilter = origin;
+
+            // A narrower list is a new list: the current page may not exist in it.
+            _page = 0;
+            UpdateFilterButtonTooltip();
+            RenderRegistry(BuildList());
+        }
+
+        _filterPopup.Close();
+    }
+
+    /// <summary>
+    ///     Human name of the current origin filter, for the button tooltip: the
+    ///     empty-string sentinel prints as "no stamp", a real origin as its own
+    ///     examine label.
+    /// </summary>
+    private string GetOriginFilterLabel() =>
+        _originFilter == null
+            ? Loc.GetString("weapon-registry-filter-show-all")
+            : _originFilter == WeaponRegistryFilterPopup.NoOriginFilter
+                ? Loc.GetString("weapon-registry-filter-origin-none")
+                : Loc.GetString(_originFilter);
+
+    /// <summary>
+    ///     Distinct origins present in the registry, ordered by their localized
+    ///     label. Data-driven on purpose: the popup never hardcodes the origin
+    ///     list, so a new uplink origin shows up here without any code changes.
+    /// </summary>
+    private List<string?> GetKnownOrigins()
+    {
+        var pairs = new List<(string? Key, string Label)>();
+        foreach (var origin in _registryEntries.Select(e => e.Origin).Distinct())
+            pairs.Add((origin, origin == null ? String.Empty : Loc.GetString(origin)));
+
+        // List.Sort takes a delegate; Enumerable.OrderBy needs an IComparer, and
+        // the comparer classes are sandbox-banned (see CompareKeys below).
+        pairs.Sort((a, b) => String.Compare(a.Label, b.Label, StringComparison.InvariantCultureIgnoreCase));
+
+        var result = new List<string?>();
+        foreach (var (key, _) in pairs)
+            result.Add(key);
+        return result;
+    }
+
+    /// <summary>
+    ///     Origin filter: null = everything, the empty-string sentinel = only
+    ///     weapons registered without an origin stamp, otherwise only weapons
+    ///     from the picked source (an uplink or a department).
+    /// </summary>
+    private List<WeaponRegistryEntry> FilterByOrigin(List<WeaponRegistryEntry> entries)
+    {
+        if (_originFilter == null)
+            return entries;
+
+        return entries.FindAll(e => _originFilter == WeaponRegistryFilterPopup.NoOriginFilter
+            ? e.Origin == null
+            : e.Origin == _originFilter);
+    }
 
     /// <summary>Entry value as it is shown to the player: a dash when it has none.</summary>
     private static string DisplayOrDash(string? value) =>
