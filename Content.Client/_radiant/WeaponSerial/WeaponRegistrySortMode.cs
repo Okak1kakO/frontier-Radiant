@@ -14,11 +14,11 @@ public enum WeaponRegistrySortMode : byte
     /// </summary>
     DateAdded,
 
-    /// <summary>Weapon name, A to Z. Nameless entries sink to the bottom.</summary>
-    NameAscending,
+    /// <summary>Owner name, A to Z. Entries with no owner (dash) sink to the bottom.</summary>
+    OwnerAscending,
 
-    /// <summary>Weapon name, Z to A. Nameless entries still sink to the bottom.</summary>
-    NameDescending,
+    /// <summary>Owner name, Z to A. Entries with no owner still sink to the bottom.</summary>
+    OwnerDescending,
 
     /// <summary>
     ///     Gun caliber, as it is printed on examine
@@ -44,8 +44,8 @@ public static class WeaponRegistrySortModeExt
     {
         return mode switch
         {
-            WeaponRegistrySortMode.NameAscending => "weapon-registry-sort-name-asc",
-            WeaponRegistrySortMode.NameDescending => "weapon-registry-sort-name-desc",
+            WeaponRegistrySortMode.OwnerAscending => "weapon-registry-sort-owner-asc",
+            WeaponRegistrySortMode.OwnerDescending => "weapon-registry-sort-owner-desc",
             WeaponRegistrySortMode.Caliber => "weapon-registry-sort-caliber",
             WeaponRegistrySortMode.WeaponClass => "weapon-registry-sort-class",
             WeaponRegistrySortMode.Serial => "weapon-registry-sort-serial",

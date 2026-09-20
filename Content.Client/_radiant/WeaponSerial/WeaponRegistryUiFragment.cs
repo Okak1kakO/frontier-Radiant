@@ -141,11 +141,11 @@ public sealed partial class WeaponRegistryUiFragment : BoxContainer
 
         switch (_sortMode)
         {
-            case WeaponRegistrySortMode.NameAscending:
-                SortByKey(sorted, e => e.Name, descending: false);
+            case WeaponRegistrySortMode.OwnerAscending:
+                SortByKey(sorted, e => e.Owner, descending: false);
                 break;
-            case WeaponRegistrySortMode.NameDescending:
-                SortByKey(sorted, e => e.Name, descending: true);
+            case WeaponRegistrySortMode.OwnerDescending:
+                SortByKey(sorted, e => e.Owner, descending: true);
                 break;
             case WeaponRegistrySortMode.Caliber:
                 SortByKey(sorted, GetCaliberKey, descending: false);
@@ -172,9 +172,9 @@ public sealed partial class WeaponRegistryUiFragment : BoxContainer
         {
             var order = CompareKeys(getKey(a), getKey(b), descending);
 
-            // List.Sort is NOT stable: two weapons with the same name would swap
-            // places between renders (even between two identical sorts). The serial
-            // is unique, so using it as a tie-breaker makes the order total.
+            // List.Sort is NOT stable: two weapons with the same key (for example
+            // both ownerless) would swap places between renders. The serial is
+            // unique, so using it as a tie-breaker makes the order total.
             return order != 0 ? order : String.Compare(a.Serial, b.Serial, StringComparison.Ordinal);
         });
     }
@@ -382,6 +382,14 @@ public sealed partial class WeaponRegistryUiFragment : BoxContainer
     {
         DetailWeapon.SetMessage(BuildMessage("weapon-registry-detail-weapon", ("name", DisplayOrDash(entry.Name))));
         DetailSerial.SetMessage(BuildMessage("weapon-registry-detail-serial", ("serial", entry.Serial)));
+
+        // Caliber lives on the weapon prototype (GunComponent.ExamineCaliber), the
+        // snapshot entry carries only the prototype id — same source the sorting
+        // uses, so the pane never contradicts the list order.
+        DetailCaliber.SetMessage(GetCaliberKey(entry) is { } caliber
+            ? BuildMessage("weapon-registry-detail-caliber", ("caliber", caliber))
+            : BuildMessage("weapon-registry-detail-caliber-unset"));
+
         DetailOrigin.SetMessage(entry.Origin == null
             ? BuildMessage("weapon-registry-detail-origin-unset")
             : BuildMessage("weapon-registry-detail-origin", ("origin", Loc.GetString(entry.Origin))));

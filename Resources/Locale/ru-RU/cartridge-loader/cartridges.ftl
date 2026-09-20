@@ -103,8 +103,8 @@ weapon-registry-filter-title = Сортировка списка
 weapon-registry-filter-tooltip = Сортировка: {$mode}
 # Пункты сортировки: одна строка = один пункт в окошке фильтра.
 weapon-registry-sort-date = Сначала новые
-weapon-registry-sort-name-asc = Имя: А → Я
-weapon-registry-sort-name-desc = Имя: Я → А
+weapon-registry-sort-owner-asc = Владелец: А → Я
+weapon-registry-sort-owner-desc = Владелец: Я → А
 weapon-registry-sort-caliber = По калибру
 weapon-registry-sort-class = По типу оружия
 weapon-registry-sort-serial = По серийному номеру
@@ -113,6 +113,8 @@ weapon-registry-search-placeholder = Поиск: серийник, назван�
 weapon-registry-no-matches = Ничего не найдено
 weapon-registry-detail-weapon = [color=darkgray]Оружие:[/color] [color=white]{$name}[/color]
 weapon-registry-detail-serial = [color=darkgray]Серийный номер:[/color] [color=white]{$serial}[/color]
+weapon-registry-detail-caliber = [color=darkgray]Калибр:[/color] [color=white]{$caliber}[/color]
+weapon-registry-detail-caliber-unset = [color=darkgray]Калибр:[/color] [color=white]не определён[/color]
 weapon-registry-detail-class = [color=darkgray]Тип:[/color] [color=white]{$class}[/color]
 weapon-registry-detail-class-unset = [color=darkgray]Тип:[/color] [color=white]не установлен[/color]
 weapon-registry-detail-origin = [color=darkgray]Происхождение:[/color] [color=white]{$origin}[/color]

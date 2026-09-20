@@ -111,8 +111,8 @@ weapon-registry-filter-title = Sort the list
 weapon-registry-filter-tooltip = Sorting: {$mode}
 # Sort orders of the list (one line = one entry in the filter window).
 weapon-registry-sort-date = Newest first
-weapon-registry-sort-name-asc = Name: A → Z
-weapon-registry-sort-name-desc = Name: Z → A
+weapon-registry-sort-owner-asc = Owner: A → Z
+weapon-registry-sort-owner-desc = Owner: Z → A
 weapon-registry-sort-caliber = By caliber
 weapon-registry-sort-class = By weapon type
 weapon-registry-sort-serial = By serial number
@@ -122,6 +122,8 @@ weapon-registry-search-placeholder = Search: serial, name, owner
 weapon-registry-no-matches = No matches
 weapon-registry-detail-weapon = [color=darkgray]Weapon:[/color] [color=white]{$name}[/color]
 weapon-registry-detail-serial = [color=darkgray]Serial number:[/color] [color=white]{$serial}[/color]
+weapon-registry-detail-caliber = [color=darkgray]Caliber:[/color] [color=white]{$caliber}[/color]
+weapon-registry-detail-caliber-unset = [color=darkgray]Caliber:[/color] [color=white]unknown[/color]
 weapon-registry-detail-class = [color=darkgray]Class:[/color] [color=white]{$class}[/color]
 weapon-registry-detail-class-unset = [color=darkgray]Class:[/color] [color=white]unknown[/color]
 weapon-registry-detail-origin = [color=darkgray]Origin:[/color] [color=white]{$origin}[/color]
