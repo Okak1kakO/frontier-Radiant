@@ -98,7 +98,16 @@ wanted-list-history-table-initiator-col = Инициатор
 weapon-registry-program-name = Реестр оружия
 weapon-registry-title = База данных ОСК
 weapon-registry-no-entries = Нет зарегистрированного оружия
-weapon-registry-refresh-button = Обновить
+weapon-registry-filter-button = Фильтр
+weapon-registry-filter-title = Сортировка списка
+weapon-registry-filter-tooltip = Сортировка: {$mode}
+# Пункты сортировки: одна строка = один пункт в окошке фильтра.
+weapon-registry-sort-date = Сначала новые
+weapon-registry-sort-name-asc = Имя: А → Я
+weapon-registry-sort-name-desc = Имя: Я → А
+weapon-registry-sort-caliber = По калибру
+weapon-registry-sort-class = По типу оружия
+weapon-registry-sort-serial = По серийному номеру
 
 weapon-registry-search-placeholder = Поиск: серийник, название, владелец
 weapon-registry-no-matches = Ничего не найдено

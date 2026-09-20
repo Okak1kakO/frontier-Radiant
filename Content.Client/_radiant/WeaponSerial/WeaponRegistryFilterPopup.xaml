@@ -1,0 +1,20 @@
+<ui:WeaponRegistryFilterPopup
+        xmlns="https://spacestation14.io"
+        xmlns:ui="clr-namespace:Content.Client._radiant.WeaponSerial"
+        MinWidth="210">
+    <!--
+        Sorting window of the OSK weapon registry program.
+        A small popup that floats OVER the PDA window: it is parented to the UI
+        modal root, so it is drawn on top of everything and closes as soon as the
+        player clicks anywhere else. The option buttons are generated in code from
+        WeaponRegistrySortMode, so adding an order means adding an enum value and a
+        loc string, not editing this file.
+    -->
+    <PanelContainer StyleClasses="BorderedWindowPanel">
+        <BoxContainer Orientation="Vertical" Margin="6">
+            <Label Text="{Loc 'weapon-registry-filter-title'}" HorizontalAlignment="Center"/>
+            <PanelContainer StyleClasses="LowDivider" Margin="0 4 0 4"/>
+            <BoxContainer Name="OptionsContainer" Orientation="Vertical" SeparationOverride="2"/>
+        </BoxContainer>
+    </PanelContainer>
+</ui:WeaponRegistryFilterPopup>

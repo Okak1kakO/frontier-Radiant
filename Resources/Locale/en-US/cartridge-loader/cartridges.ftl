@@ -106,7 +106,16 @@ wanted-list-history-table-initiator-col = Initiator
 # Radiant: OSK weapon registry page
 weapon-registry-program-name = Registered weapons
 weapon-registry-title = OSK Database
-weapon-registry-refresh-button = Refresh
+weapon-registry-filter-button = Filter
+weapon-registry-filter-title = Sort the list
+weapon-registry-filter-tooltip = Sorting: {$mode}
+# Sort orders of the list (one line = one entry in the filter window).
+weapon-registry-sort-date = Newest first
+weapon-registry-sort-name-asc = Name: A → Z
+weapon-registry-sort-name-desc = Name: Z → A
+weapon-registry-sort-caliber = By caliber
+weapon-registry-sort-class = By weapon type
+weapon-registry-sort-serial = By serial number
 
 weapon-registry-no-entries = No registered weapons
 weapon-registry-search-placeholder = Search: serial, name, owner
